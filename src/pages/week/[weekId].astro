@@ -1,0 +1,13 @@
+---
+import { getWeekIds } from '../../utils/content';
+
+export async function getStaticPaths() {
+  const weekIds = getWeekIds();
+  return weekIds.map((weekId) => ({
+    params: { weekId },
+  }));
+}
+
+const { weekId } = Astro.params;
+return Astro.redirect(`/news/week/${weekId}`, 301);
+---

@@ -1,0 +1,14 @@
+---
+interface Props {
+  lead: string;
+}
+
+const { lead } = Astro.props;
+---
+
+<div class="bg-primary-50 border-l-4 border-primary-600 p-6 rounded-r-lg my-8">
+  <p class="text-lg md:text-xl font-semibold text-gray-900 leading-relaxed">
+    {lead}
+  </p>
+</div>
+

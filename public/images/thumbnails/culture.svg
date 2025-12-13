@@ -1,0 +1,44 @@
+<svg width="640" height="360" viewBox="0 0 640 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="cultureGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D97706;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#cultureGrad)"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="90" cy="90" r="50" fill="white" opacity="0.1"/>
+  <circle cx="550" cy="270" r="60" fill="white" opacity="0.1"/>
+  
+  <!-- Main icon: Art/Palette -->
+  <g transform="translate(320, 180)">
+    <!-- Palette -->
+    <ellipse cx="0" cy="0" rx="100" ry="80" fill="white" opacity="0.9"/>
+    <ellipse cx="0" cy="0" rx="90" ry="70" fill="#F59E0B" opacity="0.2"/>
+    
+    <!-- Paint colors -->
+    <circle cx="-50" cy="-30" r="20" fill="#EF4444"/>
+    <circle cx="50" cy="-20" r="18" fill="#3B82F6"/>
+    <circle cx="-30" cy="40" r="22" fill="#10B981"/>
+    <circle cx="40" cy="35" r="19" fill="#8B5CF6"/>
+    <circle cx="0" cy="-50" r="15" fill="#FBBF24"/>
+    
+    <!-- Brush -->
+    <rect x="80" y="-60" width="8" height="50" fill="#92400E" rx="2"/>
+    <ellipse cx="84" cy="-70" rx="12" ry="8" fill="#FED7AA"/>
+    <line x1="84" y1="-78" x2="84" y2="-70" stroke="#92400E" stroke-width="2"/>
+    
+    <!-- Art lines -->
+    <path d="M-80 20 Q-40 0 0 20 T80 20" stroke="white" stroke-width="3" fill="none" opacity="0.7"/>
+    <path d="M-60 50 Q-20 30 20 50 T100 50" stroke="white" stroke-width="2" fill="none" opacity="0.6"/>
+  </g>
+  
+  <!-- Decorative stars -->
+  <g fill="white" opacity="0.5">
+    <path d="M120 50 L122 56 L128 56 L123 60 L125 66 L120 62 L115 66 L117 60 L112 56 L118 56 Z"/>
+    <path d="M520 100 L521 104 L525 104 L522 107 L523 111 L520 108 L517 111 L518 107 L515 104 L519 104 Z"/>
+  </g>
+</svg>
+

@@ -1,0 +1,75 @@
+<svg width="600" height="500" viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background decorative circles -->
+  <circle cx="500" cy="100" r="60" fill="#E0F2FE" opacity="0.6"/>
+  <circle cx="80" cy="400" r="40" fill="#F3E8FF" opacity="0.5"/>
+  <circle cx="520" cy="450" r="50" fill="#DBEAFE" opacity="0.4"/>
+  
+  <!-- Stars decoration -->
+  <g opacity="0.7">
+    <path d="M450 80 L455 95 L470 95 L458 105 L463 120 L450 110 L437 120 L442 105 L430 95 L445 95 Z" fill="#8B5CF6"/>
+    <path d="M100 200 L103 210 L113 210 L105 217 L108 227 L100 220 L92 227 L95 217 L87 210 L97 210 Z" fill="#6366F1"/>
+    <path d="M550 300 L552 306 L558 306 L553 310 L555 316 L550 312 L545 316 L547 310 L542 306 L548 306 Z" fill="#A78BFA"/>
+  </g>
+  
+  <!-- Main character - thinking child -->
+  <g>
+    <!-- Head -->
+    <circle cx="300" cy="180" r="50" fill="#FED7AA" stroke="#F97316" stroke-width="2"/>
+    <!-- Hair -->
+    <path d="M260 160 Q280 140 300 150 Q320 140 340 160 L335 180 L265 180 Z" fill="#92400E"/>
+    <!-- Face features -->
+    <circle cx="285" cy="175" r="4" fill="#1F2937"/>
+    <circle cx="315" cy="175" r="4" fill="#1F2937"/>
+    <path d="M290 195 Q300 200 310 195" stroke="#1F2937" stroke-width="2" fill="none" stroke-linecap="round"/>
+    
+    <!-- Body -->
+    <ellipse cx="300" cy="280" rx="45" ry="60" fill="#8B5CF6"/>
+    <ellipse cx="300" cy="280" rx="40" ry="55" fill="#A78BFA"/>
+    
+    <!-- Arms -->
+    <ellipse cx="250" cy="260" rx="20" ry="35" fill="#FED7AA" transform="rotate(-20 250 260)"/>
+    <ellipse cx="350" cy="260" rx="20" ry="35" fill="#FED7AA" transform="rotate(20 350 260)"/>
+    
+    <!-- Legs -->
+    <ellipse cx="280" cy="340" rx="18" ry="50" fill="#6366F1"/>
+    <ellipse cx="320" cy="340" rx="18" ry="50" fill="#6366F1"/>
+  </g>
+  
+  <!-- Thought bubble -->
+  <g opacity="0.9">
+    <ellipse cx="420" cy="120" rx="80" ry="60" fill="white" stroke="#8B5CF6" stroke-width="3"/>
+    <ellipse cx="440" cy="110" rx="25" ry="20" fill="white" stroke="#8B5CF6" stroke-width="2"/>
+    <ellipse cx="450" cy="100" rx="15" ry="12" fill="white" stroke="#8B5CF6" stroke-width="2"/>
+    <!-- News icon in bubble -->
+    <rect x="390" y="100" width="60" height="40" rx="4" fill="#8B5CF6" opacity="0.2"/>
+    <line x1="400" y1="115" x2="440" y2="115" stroke="#8B5CF6" stroke-width="2"/>
+    <line x1="400" y1="125" x2="430" y2="125" stroke="#8B5CF6" stroke-width="1.5"/>
+  </g>
+  
+  <!-- Laptop/Tablet -->
+  <g transform="translate(180, 320)">
+    <rect x="0" y="0" width="80" height="60" rx="8" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2"/>
+    <rect x="5" y="5" width="70" height="45" rx="4" fill="#1F2937"/>
+    <rect x="10" y="10" width="60" height="35" fill="#6366F1" opacity="0.8"/>
+    <!-- Screen content lines -->
+    <line x1="15" y1="20" x2="65" y2="20" stroke="white" stroke-width="1.5" opacity="0.6"/>
+    <line x1="15" y1="28" x2="55" y2="28" stroke="white" stroke-width="1.5" opacity="0.6"/>
+    <line x1="15" y1="36" x2="50" y2="36" stroke="white" stroke-width="1.5" opacity="0.6"/>
+  </g>
+  
+  <!-- Newspaper icon -->
+  <g transform="translate(400, 350)">
+    <rect x="0" y="0" width="70" height="90" rx="4" fill="white" stroke="#8B5CF6" stroke-width="2"/>
+    <line x1="10" y1="20" x2="60" y2="20" stroke="#8B5CF6" stroke-width="2"/>
+    <line x1="10" y1="35" x2="55" y2="35" stroke="#A78BFA" stroke-width="1.5"/>
+    <line x1="10" y1="50" x2="50" y2="50" stroke="#A78BFA" stroke-width="1.5"/>
+    <line x1="10" y1="65" x2="60" y2="65" stroke="#8B5CF6" stroke-width="2"/>
+    <line x1="10" y1="80" x2="55" y2="80" stroke="#A78BFA" stroke-width="1.5"/>
+  </g>
+  
+  <!-- Decorative shapes -->
+  <circle cx="150" cy="150" r="8" fill="#FBBF24" opacity="0.8"/>
+  <circle cx="480" cy="380" r="6" fill="#34D399" opacity="0.7"/>
+  <rect x="50" y="250" width="20" height="20" rx="4" fill="#F472B6" opacity="0.6" transform="rotate(45 60 260)"/>
+</svg>
+

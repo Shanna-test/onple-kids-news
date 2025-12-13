@@ -1,0 +1,16 @@
+---
+interface Props {
+  source?: string;
+}
+
+const { source } = Astro.props;
+---
+
+{source && (
+  <div class="border-t pt-6 mt-8">
+    <p class="text-sm text-gray-500">
+      <span class="font-semibold">출처:</span> {source}
+    </p>
+  </div>
+)}
+

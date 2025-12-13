@@ -1,0 +1,71 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Container from '../../../components/Container.astro';
+import SectionTitle from '../../../components/SectionTitle.astro';
+import ArticleCard from '../../../components/ArticleCard.astro';
+import Button from '../../../components/Button.astro';
+import { getArticlesByWeek, getWeekIds } from '../../../utils/content';
+
+export async function getStaticPaths() {
+  const weekIds = getWeekIds();
+  return weekIds.map((weekId) => ({
+    params: { weekId },
+  }));
+}
+
+const { weekId } = Astro.params;
+const articles = getArticlesByWeek(weekId || '');
+const weekIds = getWeekIds();
+const currentIndex = weekIds.indexOf(weekId || '');
+const prevWeek = currentIndex < weekIds.length - 1 ? weekIds[currentIndex + 1] : null;
+const nextWeek = currentIndex > 0 ? weekIds[currentIndex - 1] : null;
+---
+
+<Layout title={`${weekId} 주차 뉴스`}>
+  <Container class="py-12">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <SectionTitle title={`${weekId} 주차 뉴스`} />
+        {articles.length > 0 && (
+          <p class="text-gray-600 -mt-6 mb-4">
+            {new Date(articles[0].date).toLocaleDateString('ko-KR')} ~ {new Date(articles[articles.length - 1].date).toLocaleDateString('ko-KR')}
+          </p>
+        )}
+      </div>
+      <Button href="/news" variant="outline" size="sm">
+        ← 뉴스 목록
+      </Button>
+    </div>
+
+    {articles.length === 0 ? (
+      <div class="bg-white rounded-2xl shadow-md p-12 text-center">
+        <p class="text-gray-600 text-lg">이 주차에는 등록된 기사가 없습니다.</p>
+      </div>
+    ) : (
+      <>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {articles.map((article) => (
+            <ArticleCard article={article} />
+          ))}
+        </div>
+
+        {/* Navigation */}
+        <div class="flex justify-between items-center mt-12 pt-8 border-t">
+          {prevWeek ? (
+            <Button href={`/news/week/${prevWeek}`} variant="outline" size="sm">
+              ← {prevWeek}
+            </Button>
+          ) : (
+            <span></span>
+          )}
+          {nextWeek && (
+            <Button href={`/news/week/${nextWeek}`} variant="outline" size="sm">
+              {nextWeek} →
+            </Button>
+          )}
+        </div>
+      </>
+    )}
+  </Container>
+</Layout>
+

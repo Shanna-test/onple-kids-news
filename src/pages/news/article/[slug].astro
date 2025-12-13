@@ -1,0 +1,145 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Container from '../../../components/Container.astro';
+import Badge from '../../../components/Badge.astro';
+import Button from '../../../components/Button.astro';
+import Card from '../../../components/Card.astro';
+import ArticleLead from '../../../components/ArticleLead.astro';
+import ArticleInfoBox from '../../../components/ArticleInfoBox.astro';
+import ArticleSource from '../../../components/ArticleSource.astro';
+import { getArticleBySlug, getArticles, getThumbnailPath } from '../../../utils/content';
+import { marked } from 'marked';
+
+export async function getStaticPaths() {
+  const articles = getArticles();
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const htmlContent = await marked(article.content);
+const allArticles = getArticles();
+const currentIndex = allArticles.findIndex(a => a.slug === article.slug);
+const prevArticle = currentIndex < allArticles.length - 1 ? allArticles[currentIndex + 1] : null;
+const nextArticle = currentIndex > 0 ? allArticles[currentIndex - 1] : null;
+const imagePath = article.image || getThumbnailPath(article);
+---
+
+<Layout title={article.title} description={article.excerpt || article.lead}>
+  <Container class="py-8 md:py-12 max-w-4xl">
+    <article>
+      <!-- Header -->
+      <div class="mb-8">
+        <div class="flex items-center gap-3 mb-4 flex-wrap">
+          <Badge text={article.category} variant="primary" />
+          <span class="text-sm text-gray-500">
+            {new Date(article.date).toLocaleDateString('ko-KR', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })}
+          </span>
+          <span class="text-sm text-gray-500">·</span>
+          <span class="text-sm text-gray-500">{article.weekId}</span>
+        </div>
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+          {article.title}
+        </h1>
+      </div>
+
+      <!-- Featured Image -->
+      <div class="w-full aspect-video mb-8 rounded-xl overflow-hidden bg-gray-100">
+        <img 
+          src={imagePath} 
+          alt={article.title}
+          class="w-full h-full object-cover"
+          loading="eager"
+          onerror="this.onerror=null; this.src=this.src.replace('unsplash.com', 'source.unsplash.com/1200x675/?healthcare,children');"
+        />
+      </div>
+
+      <!-- Lead -->
+      {article.lead && (
+        <ArticleLead lead={article.lead} />
+      )}
+
+      <!-- Article Content -->
+      <div class="prose prose-lg max-w-none">
+        <div set:html={htmlContent} />
+      </div>
+
+      <!-- Kids Level Box -->
+      <ArticleInfoBox title="어린이 눈높이로 정리">
+        <p class="mb-3">
+          이 뉴스는 어린이 여러분이 이해하기 쉽도록 정리했습니다. 
+          복잡한 내용도 쉽게 설명했으니 천천히 읽어보세요.
+        </p>
+        <p>
+          궁금한 점이 있으면 부모님이나 선생님께 물어보는 것도 좋은 방법입니다.
+        </p>
+      </ArticleInfoBox>
+
+      <!-- Source -->
+      <ArticleSource source={article.source} />
+
+      {/* Navigation */}
+      <div class="flex flex-col sm:flex-row justify-between gap-4 mt-12 pt-8 border-t">
+        {prevArticle ? (
+          <Card href={`/news/article/${prevArticle.slug}`} class="flex-1">
+            <div class="p-4">
+              <p class="text-sm text-gray-500 mb-1">이전 기사</p>
+              <p class="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
+                ← {prevArticle.title}
+              </p>
+            </div>
+          </Card>
+        ) : (
+          <div class="flex-1"></div>
+        )}
+        {nextArticle && (
+          <Card href={`/news/article/${nextArticle.slug}`} class="flex-1">
+            <div class="p-4 text-right">
+              <p class="text-sm text-gray-500 mb-1">다음 기사</p>
+              <p class="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
+                {nextArticle.title} →
+              </p>
+            </div>
+          </Card>
+        )}
+      </div>
+
+      <div class="mt-8 text-center">
+        <Button href={`/news/week/${article.weekId}`}>
+          {article.weekId} 주차 전체 보기
+        </Button>
+      </div>
+    </article>
+  </Container>
+</Layout>
+
+<style>
+  :global(.prose h2) {
+    @apply text-2xl font-bold mt-8 mb-4 text-gray-900;
+  }
+  :global(.prose h3) {
+    @apply text-xl font-bold mt-6 mb-3 text-gray-900;
+  }
+  :global(.prose p) {
+    @apply mb-4 text-gray-700 leading-relaxed;
+  }
+  :global(.prose ul, .prose ol) {
+    @apply mb-4 pl-6;
+  }
+  :global(.prose li) {
+    @apply mb-2 text-gray-700;
+  }
+  :global(.prose strong) {
+    @apply font-bold text-gray-900;
+  }
+  :global(.prose a) {
+    @apply text-primary-600 hover:text-primary-700 underline;
+  }
+</style>
+

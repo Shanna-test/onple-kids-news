@@ -1,0 +1,55 @@
+---
+const currentPath = Astro.url.pathname;
+const isActive = (path: string) => currentPath === path || (path !== '/' && currentPath.startsWith(path));
+---
+
+<header class="bg-white shadow-sm sticky top-0 z-50">
+  <nav class="container mx-auto px-4 py-4">
+    <div class="flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <img src="/logo.svg" alt="온플 어린이 뉴스" class="h-8 md:h-10" />
+      </a>
+      <div class="flex gap-6 items-center">
+        <a 
+          href="/" 
+          class={`font-medium transition-colors hidden sm:block ${
+            isActive('/') ? 'text-primary-600' : 'text-gray-700 hover:text-primary-600'
+          }`}
+        >
+          홈
+        </a>
+        <a 
+          href="/news" 
+          class={`font-medium transition-colors hidden sm:block ${
+            isActive('/news') ? 'text-primary-600' : 'text-gray-700 hover:text-primary-600'
+          }`}
+        >
+          뉴스
+        </a>
+        <a 
+          href="/notice" 
+          class={`font-medium transition-colors hidden sm:block ${
+            isActive('/notice') ? 'text-primary-600' : 'text-gray-700 hover:text-primary-600'
+          }`}
+        >
+          공지
+        </a>
+        <a 
+          href="https://forms.gle/example" 
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bg-primary-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-primary-700 transition-colors shadow-md hover:shadow-lg hover:-translate-y-0.5 hidden sm:block"
+        >
+          신청하기
+        </a>
+        {/* Mobile menu */}
+        <div class="sm:hidden flex gap-3 items-center">
+          <a href="/" class={`text-sm ${isActive('/') ? 'text-primary-600 font-semibold' : 'text-gray-700'}`}>홈</a>
+          <a href="/news" class={`text-sm ${isActive('/news') ? 'text-primary-600 font-semibold' : 'text-gray-700'}`}>뉴스</a>
+          <a href="/notice" class={`text-sm ${isActive('/notice') ? 'text-primary-600 font-semibold' : 'text-gray-700'}`}>공지</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+

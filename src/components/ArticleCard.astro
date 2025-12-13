@@ -1,0 +1,45 @@
+---
+import Card from './Card.astro';
+import Badge from './Badge.astro';
+import { getThumbnailPath } from '../utils/content';
+import type { Article } from '../utils/content';
+
+interface Props {
+  article: Article;
+  featured?: boolean;
+}
+
+const { article, featured = false } = Astro.props;
+const imagePath = article.image || getThumbnailPath(article);
+const titleSize = featured ? 'text-2xl md:text-3xl' : 'text-lg';
+const excerptSize = featured ? 'text-base' : 'text-sm';
+---
+
+<Card href={`/news/article/${article.slug}`} class={featured ? 'lg:col-span-1' : ''}>
+  <!-- Thumbnail Image -->
+  <div class={`w-full ${featured ? 'aspect-[16/10]' : 'aspect-video'} overflow-hidden bg-gray-100`}>
+    <img 
+      src={imagePath} 
+      alt={article.title}
+      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+      loading={featured ? "eager" : "lazy"}
+      onerror="this.onerror=null; this.src=this.src.replace('unsplash.com', 'source.unsplash.com/1200x675/?healthcare,children');"
+    />
+  </div>
+  
+  <!-- Content -->
+  <div class={featured ? 'p-8' : 'p-6'}>
+    <div class="flex items-center gap-2 mb-3 flex-wrap">
+      <Badge text={article.category} variant="primary" />
+      <span class="text-xs text-gray-500">{article.weekId}</span>
+    </div>
+    <h3 class={`${titleSize} font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors ${featured ? '' : 'line-clamp-2 min-h-[3.5rem]'}`}>
+      {article.title}
+    </h3>
+    {article.excerpt && (
+      <p class={`${excerptSize} text-gray-600 ${featured ? 'line-clamp-3' : 'line-clamp-2'} mb-3`}>{article.excerpt}</p>
+    )}
+    <p class="text-xs text-gray-400">{new Date(article.date).toLocaleDateString('ko-KR')}</p>
+  </div>
+</Card>
+

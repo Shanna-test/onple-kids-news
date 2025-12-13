@@ -1,0 +1,24 @@
+---
+interface Props {
+  href?: string;
+  class?: string;
+}
+
+const { href, class: className = '' } = Astro.props;
+---
+
+{href ? (
+  <a
+    href={href}
+    class={`block bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group ${className}`}
+  >
+    <slot />
+  </a>
+) : (
+  <div
+    class={`bg-white rounded-2xl shadow-md ${className}`}
+  >
+    <slot />
+  </div>
+)}
+

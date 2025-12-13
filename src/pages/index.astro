@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/Container.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import Button from '../components/Button.astro';
+import { getArticles, getWeekIds } from '../utils/content';
+
+const allArticles = getArticles();
+const latestArticles = allArticles.slice(0, 2);
+const latestWeekId = getWeekIds()[0];
+const weekArticles = latestWeekId ? getArticles().filter(a => a.weekId === latestWeekId).slice(0, 8) : [];
+---
+
+
+<Layout title="온플 어린이 뉴스 | 초3-4 눈높이 사회 뉴스">
+  <Container class="py-8 md:py-12">
+    <!-- Latest News Hero -->
+    {latestArticles.length > 0 && (
+      <section class="mb-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          {latestArticles.map((article) => (
+            <ArticleCard article={article} featured={true} />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- This Week's News -->
+    {weekArticles.length > 0 && (
+      <section class="mb-16">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">이번 주 뉴스</h2>
+            <p class="text-gray-600">최근 일주일간의 주요 뉴스를 정리했습니다</p>
+          </div>
+          {latestWeekId && (
+            <Button href={`/news/week/${latestWeekId}`} variant="outline" size="sm">
+              전체 보기 →
+            </Button>
+          )}
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {weekArticles.map((article) => (
+            <ArticleCard article={article} />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- CTA Section -->
+    <section class="text-center py-12 border-t">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">더 많은 뉴스 보기</h2>
+      <p class="text-gray-600 mb-6">매주 새로운 뉴스로 세상을 알아가요</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button href="/news" size="lg">
+          전체 뉴스 보기
+        </Button>
+        {latestWeekId && (
+          <Button href={`/news/week/${latestWeekId}`} variant="outline" size="lg">
+            최신 주차 보기
+          </Button>
+        )}
+      </div>
+    </section>
+  </Container>
+</Layout>

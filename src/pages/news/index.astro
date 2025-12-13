@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Container from '../../components/Container.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getArticles, getWeekIds } from '../../utils/content';
+
+const allArticles = getArticles();
+const weekIds = getWeekIds();
+---
+
+<Layout title="뉴스" description="어린이를 위한 뉴스">
+  <Container class="py-12">
+    <SectionTitle title="전체 뉴스" subtitle="최신 뉴스를 확인하세요" />
+    
+    {allArticles.length === 0 ? (
+      <div class="bg-white rounded-2xl shadow-md p-12 text-center">
+        <p class="text-gray-600 text-lg">등록된 기사가 없습니다.</p>
+      </div>
+    ) : (
+      <>
+        {/* Week Filter */}
+        {weekIds.length > 0 && (
+          <div class="mb-8 flex flex-wrap gap-3">
+            <a
+              href="/news"
+              class="px-4 py-2 rounded-xl font-medium transition-all bg-primary-600 text-white shadow-md hover:shadow-lg hover:-translate-y-0.5"
+            >
+              전체
+            </a>
+            {weekIds.map((weekId) => (
+              <a
+                href={`/news/week/${weekId}`}
+                class="px-4 py-2 rounded-xl font-medium transition-all bg-white text-gray-700 shadow-md hover:shadow-lg hover:-translate-y-0.5 hover:bg-primary-50 hover:text-primary-600"
+              >
+                {weekId}
+              </a>
+            ))}
+          </div>
+        )}
+
+        {/* Articles Grid */}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {allArticles.map((article) => (
+            <ArticleCard article={article} />
+          ))}
+        </div>
+      </>
+    )}
+  </Container>
+</Layout>
+

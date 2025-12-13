@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Container from '../../components/Container.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import Card from '../../components/Card.astro';
+import Badge from '../../components/Badge.astro';
+import { getWeekIds, getArticlesByWeek } from '../../utils/content';
+
+const weekIds = getWeekIds();
+---
+
+<Layout title="주차 모음">
+  <Container class="py-12">
+    <SectionTitle title="주차 모음" subtitle="주차별로 정리된 뉴스를 확인하세요" />
+    
+    {weekIds.length === 0 ? (
+      <div class="bg-white rounded-2xl shadow-md p-12 text-center">
+        <p class="text-gray-600 text-lg">아직 등록된 주차가 없습니다.</p>
+      </div>
+    ) : (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {weekIds.map((weekId) => {
+          const articles = getArticlesByWeek(weekId);
+          return (
+            <Card href={`/news/week/${weekId}`}>
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                  <Badge text={weekId} variant="primary" />
+                  <span class="text-sm text-gray-500">{articles.length}개 기사</span>
+                </div>
+                <h2 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors">
+                  {weekId} 주차 뉴스
+                </h2>
+                {articles.length > 0 && (
+                  <p class="text-sm text-gray-600 mb-2">
+                    {new Date(articles[0].date).toLocaleDateString('ko-KR')} ~ {new Date(articles[articles.length - 1].date).toLocaleDateString('ko-KR')}
+                  </p>
+                )}
+                <div class="flex flex-wrap gap-2 mt-4">
+                  {[...new Set(articles.map(a => a.category))].slice(0, 3).map(category => (
+                    <Badge text={category} variant="secondary" />
+                  ))}
+                </div>
+              </div>
+            </Card>
+          );
+        })}
+      </div>
+    )}
+  </Container>
+</Layout>
+

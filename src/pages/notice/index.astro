@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Container from '../../components/Container.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import Card from '../../components/Card.astro';
+import { getNotices } from '../../utils/content';
+
+const notices = getNotices();
+---
+
+<Layout title="공지사항">
+  <Container class="py-12">
+    <SectionTitle title="공지사항" />
+    
+    {notices.length === 0 ? (
+      <Card class="p-12 text-center">
+        <p class="text-gray-600 text-lg">등록된 공지사항이 없습니다.</p>
+      </Card>
+    ) : (
+      <div class="space-y-4">
+        {notices.map((notice) => (
+          <Card href={`/notice/${notice.slug}`}>
+            <div class="p-6">
+              <div class="flex items-start justify-between">
+                <div class="flex-1">
+                  <h2 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
+                    {notice.title}
+                  </h2>
+                  <p class="text-sm text-gray-500">
+                    {new Date(notice.date).toLocaleDateString('ko-KR', { 
+                      year: 'numeric', 
+                      month: 'long', 
+                      day: 'numeric' 
+                    })}
+                  </p>
+                </div>
+                <span class="text-primary-600 group-hover:translate-x-1 transition-transform text-2xl">
+                  →
+                </span>
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    )}
+  </Container>
+</Layout>
+

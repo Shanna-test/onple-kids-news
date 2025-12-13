@@ -1,0 +1,106 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Container from '../../components/Container.astro';
+import Card from '../../components/Card.astro';
+import Button from '../../components/Button.astro';
+import { getNoticeBySlug, getNotices } from '../../utils/content';
+import { marked } from 'marked';
+
+export async function getStaticPaths() {
+  const notices = getNotices();
+  return notices.map((notice) => ({
+    params: { slug: notice.slug },
+    props: { notice },
+  }));
+}
+
+const { notice } = Astro.props;
+const htmlContent = await marked(notice.content);
+const allNotices = getNotices();
+const currentIndex = allNotices.findIndex(n => n.slug === notice.slug);
+const prevNotice = currentIndex < allNotices.length - 1 ? allNotices[currentIndex + 1] : null;
+const nextNotice = currentIndex > 0 ? allNotices[currentIndex - 1] : null;
+---
+
+<Layout title={notice.title}>
+  <Container class="py-12 max-w-4xl">
+    <article>
+      <div class="mb-8">
+        <Button href="/notice" variant="outline" size="sm" class="mb-4">
+          ← 공지사항 목록
+        </Button>
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{notice.title}</h1>
+        <p class="text-gray-500">
+          {new Date(notice.date).toLocaleDateString('ko-KR', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          })}
+        </p>
+      </div>
+
+      <Card class="p-8 md:p-12">
+        <div class="prose prose-lg max-w-none">
+          <div set:html={htmlContent} />
+        </div>
+      </Card>
+
+      {/* Navigation */}
+      <div class="flex flex-col sm:flex-row justify-between gap-4 mt-12 pt-8 border-t">
+        {prevNotice ? (
+          <Card href={`/notice/${prevNotice.slug}`} class="flex-1">
+            <div class="p-4">
+              <p class="text-sm text-gray-500 mb-1">이전 공지</p>
+              <p class="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
+                ← {prevNotice.title}
+              </p>
+            </div>
+          </Card>
+        ) : (
+          <div class="flex-1"></div>
+        )}
+        {nextNotice && (
+          <Card href={`/notice/${nextNotice.slug}`} class="flex-1">
+            <div class="p-4 text-right">
+              <p class="text-sm text-gray-500 mb-1">다음 공지</p>
+              <p class="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
+                {nextNotice.title} →
+              </p>
+            </div>
+          </Card>
+        )}
+      </div>
+
+      <div class="mt-8 text-center">
+        <Button href="/notice">
+          공지사항 목록으로
+        </Button>
+      </div>
+    </article>
+  </Container>
+</Layout>
+
+<style>
+  :global(.prose h2) {
+    @apply text-2xl font-bold mt-8 mb-4 text-gray-900;
+  }
+  :global(.prose h3) {
+    @apply text-xl font-bold mt-6 mb-3 text-gray-900;
+  }
+  :global(.prose p) {
+    @apply mb-4 text-gray-700 leading-relaxed;
+  }
+  :global(.prose ul, .prose ol) {
+    @apply mb-4 pl-6;
+  }
+  :global(.prose li) {
+    @apply mb-2 text-gray-700;
+  }
+  :global(.prose strong) {
+    @apply font-bold text-gray-900;
+  }
+  :global(.prose a) {
+    @apply text-primary-600 hover:text-primary-700 underline;
+  }
+</style>
+
