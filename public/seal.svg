@@ -1,0 +1,17 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 원형 도장 배경 -->
+  <circle cx="60" cy="60" r="58" fill="#DC2626" stroke="#B91C1C" stroke-width="2"/>
+  
+  <!-- 한자: 福壽康寧 (복수강녕) -->
+  <g fill="white" font-family="serif" font-size="28" font-weight="bold">
+    <!-- 福 (복) - 우상 -->
+    <text x="60" y="35" text-anchor="middle" dominant-baseline="middle">福</text>
+    <!-- 壽 (수) - 우하 -->
+    <text x="60" y="85" text-anchor="middle" dominant-baseline="middle">壽</text>
+    <!-- 康 (강) - 좌상 -->
+    <text x="30" y="35" text-anchor="middle" dominant-baseline="middle">康</text>
+    <!-- 寧 (녕) - 좌하 -->
+    <text x="30" y="85" text-anchor="middle" dominant-baseline="middle">寧</text>
+  </g>
+</svg>
+
